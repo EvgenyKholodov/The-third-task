@@ -62,7 +62,7 @@ app.use(expressValidator({
   }
 }));
 
-// Connect Flash
+
 app.use(flash());
 
 // Global Vars
