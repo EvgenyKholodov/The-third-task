@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 var User = require('../models/user');
 
@@ -74,6 +75,19 @@ passport.use(new LocalStrategy(
    	});
    });
   }));
+passport.use(new FacebookStrategy({
+        clientID: "1938799873104428",
+        clientSecret: "c71c526e04d870a5c4352981a9b665d2",
+        callbackURL: "http://localhost:3000/auth/facebook/callback",
+        profileFields: ['id', 'displayName', 'email'] ,
+        enableProof: true
+    },
+    function(accessToken, refreshToken, profile, cb) {
+        User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+            return cb(err, user);
+        });
+    }
+));
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -90,6 +104,9 @@ router.post('/login',
   function(req, res) {
     res.redirect('/');
   });
+
+
+
 
 router.get('/logout', function(req, res){
 	req.logout();

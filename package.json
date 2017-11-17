@@ -17,6 +17,7 @@
     "mongoose": "*",
     "nodemon": "^1.12.1",
     "passport": "*",
+    "passport-facebook": "^2.1.1",
     "passport-http": "*",
     "passport-local": "*",
     "path": "^0.12.7"
